@@ -10,7 +10,7 @@
 Clona tu proyecto desde el repositorio de GitHub:
 
 ```bash
-git clone https://github.com/AlexcodePB/tu-repositorio.git
+git clone https://github.com/AlexcodePB/OPENBREWERY_FRONT.git
 ```
 
 ### Paso 2: Navegar al Directorio del Proyecto

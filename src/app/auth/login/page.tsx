@@ -1,4 +1,5 @@
 "use client";
+import { loginUser } from "@/libs/api";
 import {
   Box,
   Button,
@@ -13,6 +14,8 @@ import {
 } from "@chakra-ui/react";
 import { auto } from "@popperjs/core";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface FormValues {
@@ -22,21 +25,42 @@ interface FormValues {
 
 const LoginPage = () => {
   const toast = useToast();
+  const router = useRouter(); // Inicializa el enrutador
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
 
-  const onSubmit = (data: FormValues) => {
-    console.log("User data submitted:", data);
-    toast({
-      title: "Inicio de sesión exitoso",
-      description: "Has iniciado sesión correctamente.",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
+  const [loading, setLoading] = useState(false); // Estado de carga
+
+  const onSubmit = async (data: FormValues) => {
+    setLoading(true); // Inicia el estado de carga
+    try {
+      await loginUser(data); // Espera la respuesta de la función
+      console.log("User data submitted:", data);
+      toast({
+        title: "Inicio de sesión exitoso",
+        description: "Has iniciado sesión correctamente.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      router.push("/"); // Redirige al usuario después de iniciar sesión
+    } catch (error: any) {
+      console.error("Error al iniciar sesión:", error);
+      toast({
+        title: "Error en el inicio de sesión",
+        description:
+          error?.response?.data?.message ||
+          "Hubo un problema al iniciar sesión. Inténtalo de nuevo.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false); // Finaliza el estado de carga
+    }
   };
 
   return (
@@ -97,7 +121,7 @@ const LoginPage = () => {
           width="full"
           borderRadius="md"
           boxShadow="md"
-          _hover={{ boxShadow: "lg" }}
+          isLoading={loading}
         >
           Iniciar Sesión
         </Button>

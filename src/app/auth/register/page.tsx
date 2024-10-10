@@ -31,12 +31,12 @@ const RegisterPage = () => {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const [loading, setLoading] = useState(false); // Estado de carga
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data: FormValues) => {
-    setLoading(true); // Inicia el estado de carga
+    setLoading(true);
     try {
-      await createNewUser(data); // Espera la respuesta de la función
+      const response = await createNewUser(data);
       console.log("User data submitted:", data);
       toast({
         title: "Registro exitoso",
@@ -45,6 +45,7 @@ const RegisterPage = () => {
         duration: 3000,
         isClosable: true,
       });
+      console.log(response);
     } catch (error: any) {
       console.error("Error al registrar el usuario:", error);
       toast({
@@ -57,15 +58,15 @@ const RegisterPage = () => {
         isClosable: true,
       });
     } finally {
-      setLoading(false); // Finaliza el estado de carga
+      setLoading(false);
     }
   };
 
   return (
     <Flex
       bg="#010316"
-      p={8} // Aumentar el padding para mayor espacio
-      w={{ base: "90%", md: "400px" }} // Ancho responsivo
+      p={8}
+      w={{ base: "90%", md: "400px" }}
       h="85vh"
       borderRadius="md"
       boxShadow="lg"
@@ -90,7 +91,7 @@ const RegisterPage = () => {
               bg="gray.700"
               color="white"
               borderColor="gray.600"
-              _placeholder={{ color: "gray.500" }} // Color del placeholder
+              _placeholder={{ color: "gray.500" }}
             />
             {errors.username && (
               <Text color="red.500">{errors.username.message}</Text>
@@ -111,7 +112,7 @@ const RegisterPage = () => {
               bg="gray.700"
               color="white"
               borderColor="gray.600"
-              _placeholder={{ color: "gray.500" }} // Color del placeholder
+              _placeholder={{ color: "gray.500" }}
             />
             {errors.email && (
               <Text color="red.500">{errors.email.message}</Text>
@@ -132,7 +133,7 @@ const RegisterPage = () => {
               bg="gray.700"
               color="white"
               borderColor="gray.600"
-              _placeholder={{ color: "gray.500" }} // Color del placeholder
+              _placeholder={{ color: "gray.500" }}
             />
             {errors.password && (
               <Text color="red.500">{errors.password.message}</Text>

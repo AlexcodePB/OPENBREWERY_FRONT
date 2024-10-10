@@ -8,6 +8,7 @@ interface ApiResponse<T> {
   message?: string;
   data?: T;
 }
+
 export async function getBars() {
   const response = await fetch("https://api.openbrewerydb.org/v1/breweries");
   return response.json();

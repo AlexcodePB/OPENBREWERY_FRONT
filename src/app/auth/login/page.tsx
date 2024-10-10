@@ -32,12 +32,12 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const [loading, setLoading] = useState(false); // Estado de carga
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data: FormValues) => {
-    setLoading(true); // Inicia el estado de carga
+    setLoading(true);
     try {
-      await loginUser(data); // Espera la respuesta de la función
+      const response = await loginUser(data);
       console.log("User data submitted:", data);
       toast({
         title: "Inicio de sesión exitoso",
@@ -46,7 +46,8 @@ const LoginPage = () => {
         duration: 3000,
         isClosable: true,
       });
-      router.push("/"); // Redirige al usuario después de iniciar sesión
+      console.log(response);
+      router.push("/");
     } catch (error: any) {
       console.error("Error al iniciar sesión:", error);
       toast({
@@ -59,15 +60,15 @@ const LoginPage = () => {
         isClosable: true,
       });
     } finally {
-      setLoading(false); // Finaliza el estado de carga
+      setLoading(false);
     }
   };
 
   return (
     <Box
       bg="#010316"
-      p={8} // Aumentar el padding para mayor espacio
-      w={{ base: "90%", md: "400px" }} // Ancho responsivo
+      p={8}
+      w={{ base: "90%", md: "400px" }}
       h="85vh"
       borderRadius="md"
       boxShadow="lg"

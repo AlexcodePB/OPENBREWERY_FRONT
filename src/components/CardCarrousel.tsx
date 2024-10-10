@@ -65,16 +65,16 @@ const CardCarousel = ({
     speed: 500,
     slidesToShow: 2,
     slidesToScroll: 1,
-    centerMode: true, // Asegúrate de que esto esté en false
-    centerPadding: "10px", // Ajusta este valor para mostrar una parte de la siguiente tarjeta
+    centerMode: true,
+    centerPadding: "10px",
     responsive: [
       {
         breakpoint: 1024,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
-          centerMode: true, // Asegúrate de que esto esté en false
-          centerPadding: "10px", // Ajusta este valor para mostrar una parte de la siguiente tarjeta
+          centerMode: true,
+          centerPadding: "10px",
         },
       },
       {
@@ -82,8 +82,8 @@ const CardCarousel = ({
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          centerMode: true, // Asegúrate de que esto esté en false
-          centerPadding: "10px", // Ajusta este valor para mostrar una parte de la siguiente tarjeta
+          centerMode: true,
+          centerPadding: "10px",
         },
       },
     ],

@@ -11,7 +11,7 @@ import {
 
 interface ReviewCardProps {
   userName: string;
-  userPhoto?: string; // URL de la foto del usuario
+  userPhoto?: string;
   comment: string;
 }
 

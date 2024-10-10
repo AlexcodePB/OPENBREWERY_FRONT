@@ -13,13 +13,13 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation"; // Importamos useRouter para gestionar la navegación
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const toast = useToast();
   const router = useRouter();
-  const pathname = usePathname(); // Obtén el pathname aquí
+  const pathname = usePathname();
   const [isDynamicRoute, setIsDynamicRoute] = useState(false);
 
   useEffect(() => {
@@ -65,7 +65,7 @@ const Navbar = () => {
             aria-label="Volver"
             variant="ghost"
             mr={4}
-            onClick={() => router.back()} // Volver a la página anterior
+            onClick={() => router.back()}
           />
         ) : (
           <Menu>

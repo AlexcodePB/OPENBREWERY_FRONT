@@ -1,6 +1,4 @@
 import { PhoneIcon } from "@chakra-ui/icons";
-import { IoLocationSharp } from "react-icons/io5";
-
 import {
   Box,
   Button,
@@ -12,6 +10,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
+import { IoLocationSharp } from "react-icons/io5";
 
 interface CardProps {
   barName: string;
@@ -27,19 +26,25 @@ const Card: React.FC<CardProps> = ({ barName, address, contact, imageSrc }) => {
       borderRadius="lg"
       overflow="hidden"
       padding="4"
-      maxW="lg"
-      h={"full"}
+      width="350px" // Ancho fijo
+      height="210px" // Alto fijo
       boxShadow="md"
-      border={"none"}
-      color={"white"}
-      bgColor={"#14132d"}
+      border="none"
+      color="white"
+      bgColor="#14132d"
     >
       <Flex>
-        <Text fontSize="xl" fontWeight="bold">
+        <Text
+          fontSize="xl"
+          fontWeight="bold"
+          whiteSpace="nowrap" // Evitar saltos de línea
+          overflow="hidden" // Ocultar el texto que se sale del área
+          textOverflow="ellipsis" // Añadir puntos suspensivos si el texto es muy largo
+        >
           {barName}
         </Text>
       </Flex>
-      <Flex mt={2} alignItems={"center"}>
+      <Flex mt={2} alignItems="center">
         <Image
           borderRadius="full"
           boxSize="80px"
@@ -63,7 +68,7 @@ const Card: React.FC<CardProps> = ({ barName, address, contact, imageSrc }) => {
       <Spacer />
       <Center>
         <Button
-          color={"white"}
+          color="white"
           mt={4}
           width="80%"
           bgGradient="linear(to-r, #3c3fe8, #de1fd6)"

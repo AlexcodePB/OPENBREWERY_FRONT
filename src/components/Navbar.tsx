@@ -1,4 +1,5 @@
-import { BellIcon, HamburgerIcon } from "@chakra-ui/icons";
+"use client";
+import { ArrowBackIcon, BellIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
@@ -6,13 +7,32 @@ import {
   IconButton,
   Menu,
   MenuButton,
+  MenuItem,
+  MenuList,
   Spacer,
   useToast,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation"; // Importamos useRouter para gestionar la navegación
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
-  const toast = useToast(); // Inicializa el hook de toast
+  const toast = useToast();
+  const router = useRouter();
+  const pathname = usePathname(); // Obtén el pathname aquí
+  const [isDynamicRoute, setIsDynamicRoute] = useState(false);
+
+  useEffect(() => {
+    const checkIfDynamicRoute = () => {
+      if (pathname.includes("/bars/") || pathname.includes("/auth/")) {
+        setIsDynamicRoute(true);
+      } else {
+        setIsDynamicRoute(false);
+      }
+    };
+
+    checkIfDynamicRoute();
+  }, [pathname]);
 
   const handleBellClick = () => {
     toast({
@@ -22,8 +42,7 @@ const Navbar = () => {
       duration: 5000,
       isClosable: true,
       position: "top",
-
-      variant: "subtle", // Cambia el estilo del toast si lo deseas
+      variant: "subtle",
     });
   };
 
@@ -39,28 +58,53 @@ const Navbar = () => {
       color={"white"}
     >
       <Flex alignItems="center" justifyContent="space-between">
-        <IconButton
-          icon={<HamburgerIcon boxSize={7} />}
-          aria-label="Menu"
-          variant=""
-          mr={4}
-        />
+        {isDynamicRoute ? (
+          <IconButton
+            color={"white"}
+            icon={<ArrowBackIcon boxSize={7} />}
+            aria-label="Volver"
+            variant="ghost"
+            mr={4}
+            onClick={() => router.back()} // Volver a la página anterior
+          />
+        ) : (
+          <Menu>
+            <MenuButton
+              color={"white"}
+              as={IconButton}
+              icon={<HamburgerIcon boxSize={7} />}
+              aria-label="Abrir menú"
+              variant="solid"
+              mr={4}
+            />
+            <MenuList color={"black"}>
+              <MenuItem>
+                <Link href="/auth/register">Registrarse</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link href="/settings">Ajustes</Link>
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        )}
 
         <Spacer />
 
         <Menu>
           <MenuButton
+            color={"white"}
             as={IconButton}
             icon={<BellIcon boxSize={7} />}
-            variant=""
+            variant="ghost"
             aria-label="Notificaciones"
             onClick={handleBellClick}
           />
         </Menu>
-        <Link href="auth/login">
+
+        <Link href="/auth/login">
           <IconButton
             icon={<GenericAvatarIcon boxSize={8} />}
-            variant=""
+            variant="ghost"
             aria-label="Usuario"
           />
         </Link>

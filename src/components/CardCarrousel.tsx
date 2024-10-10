@@ -1,11 +1,16 @@
-import { Box, Heading, Spinner, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Image,
+  Skeleton,
+  SkeletonText,
+  Text,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-
-import { Image } from "@chakra-ui/react";
 import { getBars, getBarsByState } from "../libs/api";
 import Card from "./Card";
 
@@ -27,9 +32,9 @@ const CardCarousel = ({
   imgGallery = false,
 }: CardCarouselProps) => {
   const images = [
-    "assets/images/bar2.jpg",
-    "assets/images/bar3.jpg",
-    "assets/images/bar4.jpg",
+    "../assets/images/bar2.jpg",
+    "../assets/images/bar3.jpg",
+    "../assets/images/bar4.jpg",
   ];
   const [bars, setBars] = useState<Bar[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -56,18 +61,20 @@ const CardCarousel = ({
 
   const settings = {
     infinite: true,
+    arrows: false,
     speed: 500,
-    slidesToShow: 1,
+    slidesToShow: 2,
     slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: "20px",
+    centerMode: true, // Asegúrate de que esto esté en false
+    centerPadding: "10px", // Ajusta este valor para mostrar una parte de la siguiente tarjeta
     responsive: [
       {
         breakpoint: 1024,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
-          centerMode: true,
+          centerMode: true, // Asegúrate de que esto esté en false
+          centerPadding: "10px", // Ajusta este valor para mostrar una parte de la siguiente tarjeta
         },
       },
       {
@@ -75,13 +82,23 @@ const CardCarousel = ({
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          centerMode: true, // Asegúrate de que esto esté en false
+          centerPadding: "10px", // Ajusta este valor para mostrar una parte de la siguiente tarjeta
         },
       },
     ],
   };
 
   if (loading) {
-    return <Spinner size="xl" />;
+    return (
+      <Box margin={4}>
+        <Heading as="h1" size="xl" mb={4} color={"white"}>
+          {title}
+        </Heading>
+        <Skeleton height="200px" mb={4} />
+        <SkeletonText noOfLines={4} spacing="4" skeletonHeight="10" />
+      </Box>
+    );
   }
 
   if (error) {
@@ -101,7 +118,7 @@ const CardCarousel = ({
                 src={src}
                 alt={`Image ${index + 1}`}
                 width="800px"
-                height="250px"
+                height="200px"
                 borderRadius="lg"
                 objectFit="cover"
               />
@@ -110,8 +127,8 @@ const CardCarousel = ({
         </Slider>
       ) : (
         <Slider {...settings}>
-          {bars.map((bar: Bar, i: number) => (
-            <Link key={bar.id} href={`/${bar.id}`} passHref>
+          {bars.map((bar: Bar) => (
+            <Link key={bar.id} href={`/bars/${bar.id}`} passHref>
               <Box key={bar.id} padding={2}>
                 <Card
                   key={bar.id}

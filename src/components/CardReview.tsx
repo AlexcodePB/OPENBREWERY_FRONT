@@ -17,8 +17,8 @@ interface ReviewCardProps {
 
 const ReviewCard = ({ userName, userPhoto, comment }: ReviewCardProps) => {
   return (
-    <Box width="100%" overflow="hidden" p={4} color="white" mb={4}>
-      <Flex mb={4}>
+    <Box width="100%" overflow="hidden" color="white" mb={4}>
+      <Flex mb={2}>
         <HStack spacing={4}>
           <Avatar name={userName} src={userPhoto} />
           <Text fontWeight="bold" fontSize="lg">

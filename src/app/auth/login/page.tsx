@@ -48,7 +48,8 @@ const LoginPage = () => {
       });
       console.log(response);
       router.push("/dashboard");
-    } catch (error: any) {
+    } catch (error: unknown | any) {
+      // Se añade any para evitar error de tipo
       console.error("Error al iniciar sesión:", error);
       toast({
         title: "Error en el inicio de sesión",

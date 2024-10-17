@@ -78,8 +78,8 @@ export async function loginUser(user: User): Promise<ApiResponse<any>> {
       success: true,
       data,
     };
-  } catch (error) {
-    console.error("Error in loginUser:", error.message);
+  } catch (error: unknown | any) {
+    console.error("Error logging in:", error);
     return {
       success: false,
       data: null,

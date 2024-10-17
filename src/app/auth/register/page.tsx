@@ -16,6 +16,7 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 interface FormValues {
   username: string;
@@ -24,6 +25,7 @@ interface FormValues {
 }
 
 const RegisterPage = () => {
+  const router = useRouter();
   const toast = useToast();
   const {
     register,
@@ -45,6 +47,7 @@ const RegisterPage = () => {
         duration: 3000,
         isClosable: true,
       });
+      router.push("/auth/login");
       console.log(response);
     } catch (error: any) {
       console.error("Error al registrar el usuario:", error);

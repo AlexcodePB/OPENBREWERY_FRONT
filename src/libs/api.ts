@@ -53,22 +53,36 @@ export async function createNewUser(user: User): Promise<ApiResponse<any>> {
 }
 
 export async function loginUser(user: User): Promise<ApiResponse<any>> {
-  const response = await fetch("http://localhost:3004/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
+  try {
+    const response = await fetch("http://localhost:3004/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
 
-  if (!response.ok) {
-    const errorResponse = await response.json();
-    throw new Error(errorResponse.message || "Error logging in");
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      throw new Error(errorResponse.message || "Error logging in");
+    }
+
+    const data = await response.json();
+
+    // Aquí guardamos el token en localStorage si el login es exitoso
+    if (data.token) {
+      localStorage.setItem("token", data.token); // Almacenar el token JWT
+    }
+
+    return {
+      success: true,
+      data,
+    };
+  } catch (error) {
+    console.error("Error in loginUser:", error.message);
+    return {
+      success: false,
+      data: null,
+    };
   }
-
-  const data = await response.json();
-  return {
-    success: true,
-    data,
-  };
 }

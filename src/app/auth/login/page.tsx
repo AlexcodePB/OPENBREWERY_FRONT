@@ -47,7 +47,7 @@ const LoginPage = () => {
         isClosable: true,
       });
       console.log(response);
-      router.push("/");
+      router.push("/dashboard");
     } catch (error: any) {
       console.error("Error al iniciar sesión:", error);
       toast({
